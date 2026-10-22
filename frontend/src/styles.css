@@ -1,0 +1,336 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=DM+Sans:wght@400;500;600&display=swap");
+
+:root {
+  --bg: #f6f2ea;
+  --surface: #fffdf8;
+  --ink: #23221f;
+  --muted: #7a766c;
+  --line: #e6dfd0;
+  --accent: #2f5d50;
+  --accent-dark: #244a40;
+  --income: #2e7d4f;
+  --expense: #c2462f;
+  --balance: #2f5d50;
+  --radius: 14px;
+  --shadow: 0 1px 2px rgba(60, 50, 30, 0.06), 0 6px 20px rgba(60, 50, 30, 0.05);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "DM Sans", system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Layout ---------- */
+
+.dashboard {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 48px 24px 72px;
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.page-header,
+.summary-container {
+  grid-column: 1 / -1;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 2.6rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+}
+
+.subtitle {
+  margin: 4px 0 0;
+  color: var(--muted);
+}
+
+/* ---------- Summary cards ---------- */
+
+.summary-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.summary-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.summary-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--line);
+}
+
+.summary-card:nth-child(1)::before { background: var(--income); }
+.summary-card:nth-child(2)::before { background: var(--expense); }
+.summary-card:nth-child(3)::before { background: var(--balance); }
+
+.summary-card h3 {
+  margin: 0 0 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.summary-card p {
+  margin: 0;
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 1.9rem;
+  font-weight: 600;
+}
+
+.income { color: var(--income); }
+.expense { color: var(--expense); }
+.balance { color: var(--balance); }
+
+/* ---------- Form ---------- */
+
+.transaction-form {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 24px;
+}
+
+.transaction-form h2,
+.transaction-history h2 {
+  margin: 0 0 16px;
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+}
+
+.transaction-form label {
+  margin: 12px 0 5px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.transaction-form input,
+.transaction-form select {
+  width: 100%;
+  padding: 10px 12px;
+  font: inherit;
+  color: var(--ink);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.transaction-form input:focus,
+.transaction-form select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(47, 93, 80, 0.15);
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+.form-actions button {
+  flex: 1;
+  padding: 11px 16px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--accent);
+  border: none;
+  border-radius: 10px;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.form-actions button:hover:not(:disabled) {
+  background: var(--accent-dark);
+}
+
+.form-actions button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.form-actions button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.form-actions .secondary-button {
+  flex: 0 0 auto;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--line);
+}
+
+.form-actions .secondary-button:hover:not(:disabled) {
+  background: #f1ece0;
+}
+
+.status-message {
+  margin: 14px 0 0;
+  padding: 10px 12px;
+  font-size: 0.9rem;
+  background: #eef3ef;
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+}
+
+/* ---------- Transaction history ---------- */
+
+.transaction-history {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow);
+}
+
+.empty-state {
+  margin: 0;
+  padding: 36px 12px;
+  text-align: center;
+  color: var(--muted);
+  border: 1.5px dashed var(--line);
+  border-radius: 10px;
+}
+
+.transaction-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.transaction-item {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 4px;
+  border-bottom: 1px solid var(--line);
+}
+
+.transaction-item:last-child {
+  border-bottom: none;
+}
+
+.transaction-details h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.transaction-details p {
+  margin: 2px 0 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.transaction-item > strong {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 1.1rem;
+  white-space: nowrap;
+}
+
+.transaction-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.edit-button,
+.delete-button {
+  padding: 6px 12px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.edit-button {
+  color: var(--accent);
+}
+
+.edit-button:hover {
+  background: #eef3ef;
+  border-color: var(--accent);
+}
+
+.delete-button {
+  color: var(--expense);
+}
+
+.delete-button:hover {
+  background: #fbeeea;
+  border-color: var(--expense);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 860px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+    padding: 32px 16px 56px;
+  }
+
+  .transaction-form {
+    position: static;
+  }
+
+  .page-header h1 {
+    font-size: 2.1rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .summary-container {
+    grid-template-columns: 1fr;
+  }
+
+  .transaction-item {
+    grid-template-columns: 1fr auto;
+  }
+
+  .transaction-actions {
+    grid-column: 1 / -1;
+  }
+}
