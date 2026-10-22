@@ -1,4 +1,4 @@
-export const API_URL = "http://127.0.0.1:8000";
+export const API_URL = "https://spendwise-th1f.onrender.com";
 
 const TOKEN_KEY = "spendwise_token";
 
