@@ -9,7 +9,11 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 if not DATABASE_URL:
     raise RuntimeError("DATABASE URL id missing from .env file")
 
-engine = create_engine(DATABASE_URL)
+engine = create_engine(
+    DATABASE_URL.replace("postgresql://", "postgresql+psycopg2://", 1)
+    if DATABASE_URL.startswith("postgresql://")
+    else DATABASE_URL
+)
 
 SessionLocal = sessionmaker(
     autoflush=False,
